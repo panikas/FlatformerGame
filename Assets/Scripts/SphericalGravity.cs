@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public class SphericalGravity : MonoBehaviour
 {
-
-    public List<GameObject> objects;
-    public GameObject planet;
-
-    public float gravitationalPull;
+    [SerializeField]
+    private GameObject player;
+    [SerializeField]
+    private List<GameObject> objects;
+    [SerializeField]
+    private GameObject planet;
+    [SerializeField]
+    private float gravitationalPull;
+    [SerializeField]
+    PlayerController pController;
 
     void FixedUpdate()
     {
@@ -20,6 +25,7 @@ public class SphericalGravity : MonoBehaviour
                 o.GetComponent<Rigidbody>().AddForce((planet.transform.position - o.transform.position).normalized * gravitationalPull);
             }
         }
+        player.GetComponent<Rigidbody>().AddForce((planet.transform.position - player.transform.position).normalized * gravitationalPull * pController.gravForceModifier);
         /*or apply gravity to all game objects with rigidbody
         foreach (GameObject o in UnityEngine.Object.FindObjectsOfType<GameObject>())
         {

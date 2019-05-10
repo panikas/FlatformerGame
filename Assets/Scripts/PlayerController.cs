@@ -17,7 +17,10 @@ public class PlayerController : MonoBehaviour
     private float camRotateSpeed, currentSprintSpeed;
     public bool inAir = false;
     private bool moving = false;
-    public float moveSpeed, jumpScale, sprintSpeed;
+    public float moveSpeed, jumpScale, sprintSpeed, gravForceModifier;
+    [SerializeField]
+    private AnimationCurve gravCurve;
+    public float timeSinceLastCollision, inAirMoveSpeedMod;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +32,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (inAir)
+        {
+            inAirMoveSpeedMod = 0.5f;
+            timeSinceLastCollision += Time.deltaTime;
+        }
+        else
+        {
+            inAirMoveSpeedMod = 1f;
+        }
+        gravForceFixer();
         currentSprintSpeed = 1f;
         if (Input.GetKey(Sprint))
         {
@@ -45,35 +58,39 @@ public class PlayerController : MonoBehaviour
             col.material.staticFriction = 0f;
         }
         moving = false;
-        if (Input.GetKey(Up) && !inAir)
+        if (Input.GetKey(Up))
         {
-            rBody.AddForce(-playerModel.transform.forward.normalized * moveSpeed * currentSprintSpeed, ForceMode.Force);
+            rBody.AddForce(-playerModel.transform.forward.normalized * moveSpeed * currentSprintSpeed * inAirMoveSpeedMod, ForceMode.Force);
             moving = true;
         }
-        if (Input.GetKey(Down) && !inAir)
+        if (Input.GetKey(Down))
         {
-            rBody.AddForce(playerModel.transform.forward.normalized * moveSpeed * currentSprintSpeed, ForceMode.Force);
+            rBody.AddForce(playerModel.transform.forward.normalized * moveSpeed * currentSprintSpeed * inAirMoveSpeedMod, ForceMode.Force);
             moving = true;
         }
-        if (Input.GetKey(Left) && !inAir)
+        if (Input.GetKey(Left))
         {
-            rBody.AddForce(playerModel.transform.right.normalized * moveSpeed * currentSprintSpeed, ForceMode.Force);
+            rBody.AddForce(playerModel.transform.right.normalized * moveSpeed * currentSprintSpeed * inAirMoveSpeedMod, ForceMode.Force);
             moving = true;
         }
-        if (Input.GetKey(Right) && !inAir)
+        if (Input.GetKey(Right))
         {
-            rBody.AddForce(-playerModel.transform.right.normalized * moveSpeed * currentSprintSpeed, ForceMode.Force);
+            rBody.AddForce(-playerModel.transform.right.normalized * moveSpeed * currentSprintSpeed * inAirMoveSpeedMod, ForceMode.Force);
             moving = true;
         }
         if (Input.GetKeyDown(Jump) && !inAir)
         {
             rBody.AddForce(playerModel.transform.up.normalized * jumpScale, ForceMode.Impulse);
             moving = true;
-            //inAir = true;
+            inAir = true;
         }
-        
 
-        //alignToGrav();
+        
+    }
+    private void gravForceFixer()
+    {
+        
+        gravForceModifier = gravCurve.Evaluate(timeSinceLastCollision);
         
     }
     private void alignToGrav()
