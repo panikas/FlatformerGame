@@ -60,10 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\CameraShakeLayerInspector.cs" />
-    <Compile Include="Assets\Editor\CameraShakeMasterInspector.cs" />
-    <Compile Include="Assets\Editor\CameraShakeProfileEditorWindow.cs" />
-    <Compile Include="Assets\Editor\ConditionalFieldAttributeDrawer.cs" />
+    <Compile Include="Assets\Scripts\Editor\CameraShakeLayerInspector.cs" />
+    <Compile Include="Assets\Scripts\Editor\CameraShakeMasterInspector.cs" />
+    <Compile Include="Assets\Scripts\Editor\CameraShakeProfileEditorWindow.cs" />
+    <Compile Include="Assets\Scripts\Editor\ConditionalFieldAttributeDrawer.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Projects/Flatformer Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

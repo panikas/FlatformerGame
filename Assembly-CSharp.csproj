@@ -67,6 +67,7 @@
     <Compile Include="Assets\CameraShakeProfile.cs" />
     <Compile Include="Assets\CameraShakeRotationLayer.cs" />
     <Compile Include="Assets\ScriptableObjectData\CamerashakeProfileData.cs" />
+    <Compile Include="Assets\Scripts\Attributes\ConditionalFieldAttribute.cs" />
     <Compile Include="Assets\Scripts\PlayerCollision.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\RotateByGravity.cs" />
